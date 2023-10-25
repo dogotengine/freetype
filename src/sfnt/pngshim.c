@@ -64,6 +64,8 @@
     /* Intel compilers do not currently support __builtin_shuffle;  */
 
     /* The Intel check must be first. */
+    //+DOGOT
+    // Disable intrinsics on Emscripten.
 #if !defined( __INTEL_COMPILER )                                       && \
     ( ( defined( __GNUC__ )                                &&             \
         ( ( __GNUC__ >= 5 )                              ||               \
@@ -73,7 +75,8 @@
         ( ( __clang_major__ == 3 ) && ( __clang_minor__ >= 2 ) ) ) ) ) && \
     defined( __OPTIMIZE__ )                                            && \
     defined( __SSE__ )                                                 && \
-    __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ && !defined(EMSCRIPTEN)
+    //-DOGOT
 
 #ifdef __clang__
     /* the clang documentation doesn't cover the two-argument case of */
